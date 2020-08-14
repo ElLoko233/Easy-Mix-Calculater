@@ -6,8 +6,12 @@ Performing the maths that involves the ingredients and product
 
 
 # Tools for calculating the number of products can be produce with given ingredients
-def get_key(val, my_dict):
-    # function to return key for any value
+def get_key(val, my_dict:dict):
+    """
+    ::my_dict: Dictionary of Ingredient objects
+    ::returns: Key to the Ingredient object with the smallest value
+    """
+    
     for key, value in my_dict.items():
         if val == value.value:
             return key
@@ -16,6 +20,11 @@ def get_key(val, my_dict):
 
 
 def product_ratio(exclude_product, new_ingredients):
+    """
+    ::exclude_products:  Dictionary of Ingedient objects, excluding the Products ingredient
+    ::new_ingredients:  Dictionary of Ingredient objects
+    """
+    
     # Creating a list of values from new_ingredients in order to determine smallest value
     min_val = [value.value for value in new_ingredients.values()]
     min_key = get_key(min(min_val), new_ingredients)
@@ -27,9 +36,9 @@ def product_ratio(exclude_product, new_ingredients):
 def calculate_product(org_ingredient: dict, new_ingredient: dict):
     """
 
-    :param org_ingredient: original ingredients
-    :param new_ingredient: new ingredients
-    :return: return ingredients values of ingredients that can be used and the product they will produce
+    :param org_ingredient: original ingredients, Dictionary of Ingredient objects
+    :param new_ingredient: new ingredients, Dictionary of Ingredient objects
+    :return: return an adjusted Dictioanry of Ingredient object,
     """
     exclude_product = org_ingredient  # Excluding the 'Product' item// This line doesnt create a copy of the dict
     Product = exclude_product.pop('Product')
@@ -64,7 +73,7 @@ def calculate_product(org_ingredient: dict, new_ingredient: dict):
 
 
         else:
-            # Converting egg to appropriate measurement
+            # Rounding o products to the whole number
             converted_ingredients['Product'] = round(converted_ingredients['Product'])  # Rounding off products
             return converted_ingredients
 
@@ -79,16 +88,15 @@ def calculate_product(org_ingredient: dict, new_ingredient: dict):
 def calculate_ingredients(org_ingredients, new_product):
     """
 
-    :param org_ingredients: orginal ingredients
-    :param new_product: The number of product
+    :param org_ingredients: orginal ingredients, Dictionary of Ingredient objects
+    :param new_product: The number of product, Dictionary of Ingredient objects
     :return: will return the ingredients to make a certain number of product
     """
 
     # The ratio for determining the amounts
     ratio = (new_product/org_ingredients['Product']).value
-    print(ratio)
+    
     # Converting egg unit
-
     converted_ingredients = {}
     for ing in org_ingredients:
         # Testing of egg
@@ -103,22 +111,3 @@ def calculate_ingredients(org_ingredients, new_product):
             converted_ingredients[ing] = round(org_ingredients[ing] * ratio, 2)
     else:
         return converted_ingredients
-
-
-
-# Testing the calculate product function
-init = {
-    'Product': Ingredients(24, 'Product'),
-    'Egg': Egg(252, 'g'),
-    'Oil': Wet(200, 'ml'),
-    'Milk': Wet(320, 'ml'),
-    'Mix': Dry(1000, 'g')
-}
-
-new = {
-
-    'Egg': Egg(1, 'J-egg'),
-    'Oil': Wet(400, 'ml'),
-    'Milk': Wet(400, 'ml'),
-    'Mix': Dry(2000, 'g')
-}
