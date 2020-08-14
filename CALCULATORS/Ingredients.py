@@ -6,7 +6,8 @@ Its a new data type, main class name is Ingredients and it inherits from tuple c
 class Ingredients():
     """
     This class is used to create ingredient object
-    in a tuple in the format of value units eg (value, units)
+    These objects contain essential data for perfroming calculation on ingredients 
+    ::Format: (value, unit)
     """
 
     def __init__(self, value, unit):
@@ -212,6 +213,11 @@ class Ingredients():
 
 
 class Wet(Ingredients):
+    
+    """
+    Manages the calculation partaining to ingredients that have volume
+    """
+    
 
     def __init__(self, value, unit):
         super(Wet, self).__init__(value, unit)
@@ -247,6 +253,11 @@ class Wet(Ingredients):
 
 
 class Dry(Ingredients):
+    
+    """
+    Manages calculation of ingredients that have mass
+    """
+    
     def __init__(self, value, unit):
         super(Dry, self).__init__(value, unit)
         self.size = self._mass_unit
@@ -281,6 +292,10 @@ class Dry(Ingredients):
 
 
 class Egg(Dry):
+    
+    """
+    Manages calculation of Egg like ingredients
+    """
 
     def __init__(self, value, unit):
         super(Egg, self).__init__(value, unit)
@@ -329,7 +344,3 @@ class Egg(Dry):
         else:
             return self.__class__(new_value, new_unit)
 
-foo = Egg(5000, 'L-egg')
-
-add = foo
-# print(add.unit_convert(), foo)
