@@ -3,16 +3,20 @@ Its a new data type, main class name is Ingredients and it inherits from tuple c
 """
 
 
-class Ingredients():
+class Ingredients:
     """
     This class is used to create ingredient object
-    These objects contain essential data for perfroming calculation on ingredients 
+    These objects contain essential data for perfroming calculation on ingredients
     ::Format: (value, unit)
     """
 
-    def __init__(self, value, unit):
+    def __init__(self, value: float, unit: str):
         self.value = float(value)
         self.unit = str(unit)
+
+        # Testing if value is positive
+        if self.value < 0:
+            raise ValueError(f"{self.value}, ingredients can only be positive floats or int")
 
         # Units of conversion/ SI units
         self._volume_unit = {'ml': 10 ** -3, 'l': 10 ** 0, 'kl': 10 ** 3}
@@ -54,88 +58,71 @@ class Ingredients():
         return f"{self.value} {self.unit}"
 
     def __lt__(self, other):
-        # Test if object are the from  same class
+        # Testing if objects are same class
         if type(self) == type(other):
+            return self.value < other.value
 
-            # Testing if instances have the same unit value
-            if self.unit == other.unit:
-                return self.value < other.value
-
-            else:
-                raise TypeError(f"Unable to handle value of different units, {self.unit} + {other.unit}")
+        elif type(other) == float or type(other) == int:
+            return self.value < other
 
         else:
-            raise TypeError(f"Unable to handle operator with {type(self)} and {type(other)}")
+            raise TypeError(f"cannot test objects of {type(self)} with {type(other)}")
 
     def __gt__(self, other):
-        # Test if object are the from  same class
+        # Testing if objects are same class
         if type(self) == type(other):
+            return self.value > other.value
 
-            # Testing if instances have the same unit value
-            if self.unit == other.unit:
-                return self.value > other.value
-
-            else:
-                raise TypeError(f"Unable to handle value of different units, {self.unit} + {other.unit}")
+        elif type(other) == float or type(other) == int:
+            return self.value > other
 
         else:
-            raise TypeError(f"Unable to handle operator with {type(self)} and {type(other)}")
+            raise TypeError(f"cannot test objects of {type(self)} with {type(other)}")
 
     def __le__(self, other):
-        # Test if object are  from the same class
+        # Testing if objects are same class
         if type(self) == type(other):
+            return self.value <= other.value
 
-            # Testing if instances have the same unit value
-            if self.unit == other.unit:
-                return self.value <= other.value
-
-            else:
-                raise TypeError(f"Unable to handle value of different units, {self.unit} + {other.unit}")
+        elif type(other) == float or type(other) == int:
+            return self.value <= other
 
         else:
-            raise TypeError(f"Unable to handle operator with {type(self)} and {type(other)}")
+            raise TypeError(f"cannot test objects of {type(self)} with {type(other)}")
 
     def __eq__(self, other):
-        # Test if object are  from the same class
+
+        # Testing if objects are same class
         if type(self) == type(other):
+            return self.value == other.value and self.unit == other.unit
 
-            # Testing if instances have the same unit value
-            if self.unit == other.unit:
-                return self.value == other.value
-
-            else:
-                raise TypeError(f"Unable to handle value of different units, {self.unit} + {other.unit}")
+        elif type(other) == float or type(other) == int:
+            return self.value == other
 
         else:
-            raise TypeError(f"Unable to handle operator with {type(self)} and {type(other)}")
+            raise TypeError(f"cannot test objects of {self.__class__} with {other.__class__}")
 
     def __ne__(self, other):
-        # Test if object are  from the same class
+        # Testing if objects are same class
         if type(self) == type(other):
+            return self.value != other.value and self.unit != other.unit
 
-            # Testing if instances have the same unit value
-            if self.unit == other.unit:
-                return self.value != other.value
-
-            else:
-                raise TypeError(f"Unable to handle value of different units, {self.unit} + {other.unit}")
+        elif type(other) == float or type(other) == int:
+            return self.value != other
 
         else:
-            raise TypeError(f"Unable to handle operator with {type(self)} and {type(other)}")
+            raise TypeError(f"cannot test objects of {type(self)} with {type(other)}")
 
     def __ge__(self, other):
-        # Test if object are  from the same class
+        # Testing if objects are same class
         if type(self) == type(other):
+            return self.value >= other.value
 
-            # Testing if instances have the same unit value
-            if self.unit == other.unit:
-                return self.value >= other.value
-
-            else:
-                raise TypeError(f"Unable to handle value of different units, {self.unit} + {other.unit}")
+        elif type(other) == float or type(other) == int:
+            return self.value >= other
 
         else:
-            raise TypeError(f"Unable to handle operator with {type(self)} and {type(other)}")
+            raise TypeError(f"cannot test objects of {type(self)} with {type(other)}")
 
     def __mul__(self, other):
         # Test if object are  from the same class
@@ -146,7 +133,7 @@ class Ingredients():
                 return self.__class__(self.value * other.value, self.unit)
 
             else:
-                raise TypeError(f"Unable to handle value of different units, {self.unit} + {other.unit}")
+                raise TypeError(f"Unable to handle value of different units, {self.unit} * {other.unit}")
         # operation is between __class__ and float
         elif type(float(other)) == float:
             return self.__class__(self.value * other, self.unit)
@@ -213,11 +200,10 @@ class Ingredients():
 
 
 class Wet(Ingredients):
-    
+
     """
     Manages the calculation partaining to ingredients that have volume
     """
-    
 
     def __init__(self, value, unit):
         super(Wet, self).__init__(value, unit)
@@ -253,11 +239,11 @@ class Wet(Ingredients):
 
 
 class Dry(Ingredients):
-    
+
     """
     Manages calculation of ingredients that have mass
     """
-    
+
     def __init__(self, value, unit):
         super(Dry, self).__init__(value, unit)
         self.size = self._mass_unit
@@ -292,7 +278,7 @@ class Dry(Ingredients):
 
 
 class Egg(Dry):
-    
+
     """
     Manages calculation of Egg like ingredients
     """
