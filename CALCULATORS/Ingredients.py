@@ -1,6 +1,25 @@
 """
 Its a new data type, main class name is Ingredients and it inherits from tuple class
 """
+import logging
+
+# Creating logger objects ==============================================================================================
+ingredients_logger = logging.getLogger("Ingredient logger")
+ingredients_logger.setLevel(logging.INFO)
+
+# Creating Formatter object
+LOG_FORMAT = logging.Formatter(fmt="%(levelname)s:Function-%(funcName)s, In_line-%(lineno)d: Message-%(message)s")
+
+# Creating the file handlers
+ingredients_log_file = logging.FileHandler(filename="Ingredients_logs.log")
+ingredients_log_file.setFormatter(LOG_FORMAT)
+ingredients_log_file.setLevel(logging.INFO)
+
+# Adding handlers to the respective logger objects
+ingredients_logger.addHandler(ingredients_log_file)
+
+
+# ======================================================================================================================
 
 
 class Ingredients:
@@ -200,7 +219,6 @@ class Ingredients:
 
 
 class Wet(Ingredients):
-
     """
     Manages the calculation partaining to ingredients that have volume
     """
@@ -224,6 +242,7 @@ class Wet(Ingredients):
         # Converting value into litres
         new_value = self.value * self._volume_unit.get(self.unit)
         new_unit = 'l'
+        ingredients_logger.info(f"{self.__class__}:{str(self)}-- Converted to litres")
 
         # Testing if value conversion is specified
         if unit_to != None:
@@ -231,15 +250,17 @@ class Wet(Ingredients):
             if self._volume_unit.get(unit_to):
                 new_value /= self._volume_unit.get(unit_to)
                 new_unit = unit_to
+                ingredients_logger.info(f"{self.__class__}:{str(new_value) + new_unit}-- Converted to {unit_to} \n\n")
                 return self.__class__(new_value, new_unit)
             else:
+                ingredients_logger.error(f"{self.__class__}:{str(new_value) + new_unit}-- Unit_to:{unit_to} is not valid measurement \n\n")
                 raise TypeError(f"Unit to convert to is not valid {unit_to}")
         else:
+            ingredients_logger.info(f"{self.__class__}:{str(new_value) + new_unit}-- Returned {new_unit} measurement \n\n")
             return self.__class__(new_value, new_unit)
 
 
 class Dry(Ingredients):
-
     """
     Manages calculation of ingredients that have mass
     """
@@ -249,7 +270,7 @@ class Dry(Ingredients):
         self.size = self._mass_unit
 
         # Testing if unit is a mass measurement/ egg size is also tested because Egg class values are also tested here
-        if not (self._egg_size.get(self.unit)) and not(self._mass_unit.get(self.unit)):
+        if not (self._egg_size.get(self.unit)) and not (self._mass_unit.get(self.unit)):
             raise TypeError(f"{self.unit} is not valid mass measurement unit")
 
     # Unit conversion method
@@ -263,6 +284,7 @@ class Dry(Ingredients):
         # Converting value into grams
         new_value = self.value * self._mass_unit.get(self.unit)
         new_unit = 'g'
+        ingredients_logger.info(f"{self.__class__}:{str(self)}-- Converted to grams")
 
         # Testing if value conversion is specified
         if unit_to != None:
@@ -270,15 +292,17 @@ class Dry(Ingredients):
             if self._mass_unit.get(unit_to):
                 new_value /= self._mass_unit.get(unit_to)
                 new_unit = unit_to
+                ingredients_logger.info(f"{self.__class__}:{str(new_value) + new_unit}-- Converted to {unit_to} \n\n")
                 return self.__class__(new_value, new_unit)
             else:
+                ingredients_logger.error(f"{self.__class__}:{str(new_value) + new_unit}-- Unit_to:{unit_to} is not valid measurement \n\n")
                 raise TypeError(f"Unit to convert to is not valid {unit_to}")
         else:
+            ingredients_logger.info(f"{self.__class__}:{str(new_value) + new_unit}-- Returned {new_unit} measurement \n\n")
             return self.__class__(new_value, new_unit)
 
 
 class Egg(Dry):
-
     """
     Manages calculation of Egg like ingredients
     """
@@ -288,7 +312,7 @@ class Egg(Dry):
         self.size = self._egg_size
 
         # Testing if unit is a egg size
-        if not (self._egg_size.get(self.unit)) and not(self._mass_unit.get(self.unit)):
+        if not (self._egg_size.get(self.unit)) and not (self._mass_unit.get(self.unit)):
             raise TypeError(f"{self.unit} is not valid egg size")
 
     # Unit conversion method
@@ -305,28 +329,33 @@ class Egg(Dry):
             new = super(Egg, self).unit_convert()
             new_value = new.value
             new_unit = new.unit
+            ingredients_logger.info(f"{self.__class__}:{str(self)}-- Converted to grams")
 
         # If unit is egg size
         else:
             # Converting mass into grams
             new_value = self.value * self._egg_size.get(self.unit)
             new_unit = 'g'
+            ingredients_logger.info(f"{self.__class__}:{str(self)}-- Converted to grams")
 
         # Testing if value conversion is specified
         if unit_to != None:
 
             # Converting value to specified unit_to
-            if self._egg_size.get(unit_to): # Testing if convert unit is egg size
+            if self._egg_size.get(unit_to):  # Testing if convert unit is egg size
                 new_value /= self._egg_size.get(unit_to)
                 new_unit = unit_to
+                ingredients_logger.info(f"{self.__class__}:{str(new_value) + new_unit}-- Converted to {unit_to} \n\n")
                 return self.__class__(new_value, new_unit)
 
             elif self._mass_unit.get(unit_to):  # Testing if convert unit is mass unit
                 new_value /= self._mass_unit.get(unit_to)
                 new_unit = unit_to
+                ingredients_logger.info(f"{self.__class__}:{str(new_value) + new_unit}-- Converted to {unit_to} \n\n")
                 return self.__class__(new_value, new_unit)
             else:
+                ingredients_logger.error(f"{self.__class__}:{str(new_value) + new_unit}-- Unit_to:{unit_to} is not valid measurement \n\n")
                 raise TypeError(f"Unit to convert to is not valid {unit_to}")
         else:
+            ingredients_logger.info(f"{self.__class__}:{str(new_value) + new_unit}-- Returned {new_unit} measurement \n\n")
             return self.__class__(new_value, new_unit)
-
