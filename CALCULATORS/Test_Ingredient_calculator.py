@@ -1,7 +1,7 @@
 import unittest
 
-from .Ingredients import *
-from .Ingrediant_calculator import calculate_product, calculate_ingredients
+from Ingredients import *
+from Ingrediant_calculator import calculate_product, calculate_ingredients
 
 
 class TestCalculatorsProduct(unittest.TestCase):
@@ -257,6 +257,3 @@ class TestCalculateIngredients(unittest.TestCase):
         # Comparing values to expected values
         for result, correct in zip(str_results, correct_results):
             self.assertEqual(result, correct)
-
-
-

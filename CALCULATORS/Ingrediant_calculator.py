@@ -1,4 +1,4 @@
-from .Ingredients import Wet, Dry, Egg, Ingredients
+
 import logging
 
 """
@@ -20,6 +20,8 @@ calculator_log_file.setLevel(logging.INFO)
 # Adding handlers to the respective logger objects
 calculator_logger.addHandler(calculator_log_file)
 calculator_logger
+
+
 # ======================================================================================================================
 
 # Tools for calculating the number of products can be produce with given ingredients
@@ -98,7 +100,8 @@ def calculate_product(org_ingredient: dict, new_ingredient: dict):
 
     else:
         calculator_logger.error("Ingredients did not match \n\n")
-        raise ValueError(f"{[str(org_ingredient[ing]) for ing in org_ingredient]} and {[str(new_ingredient[ing]) for ing in new_ingredient]} these are not related ingredients")
+        raise ValueError(
+            f"{[str(org_ingredient[ing]) for ing in org_ingredient]} and {[str(new_ingredient[ing]) for ing in new_ingredient]} these are not related ingredients")
 
 
 # ============================================================================

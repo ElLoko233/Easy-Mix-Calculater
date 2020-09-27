@@ -1,6 +1,6 @@
 import unittest
 
-from .Ingredients import *
+from Ingredients import *
 
 
 class TestIngredients(unittest.TestCase):
