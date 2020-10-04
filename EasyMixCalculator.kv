@@ -160,6 +160,7 @@ ScreenManager:
                                 height: self.texture_size[1]
                                 theme_text_color: "Hint"
                             MDLabel:
+                                markup: True
                                 text: AboutUsPage.SnowFlake["Telephone"]
                                 font_style: 'Body1'
                                 size_hint_y: None
@@ -177,6 +178,7 @@ ScreenManager:
                                 height: self.texture_size[1]
                                 theme_text_color: "Hint"
                             MDLabel:
+                                markup: True
                                 text: AboutUsPage.SnowFlake["Address"]
                                 font_style: 'Body1'
                                 size_hint_y: None
@@ -188,19 +190,19 @@ ScreenManager:
                             adaptive_height: True
 
                             MDLabel:
-                                text: "Customer Care Email"
+                                text: "Website"
                                 font_style: 'Caption'
                                 size_hint_y: None
                                 height: self.texture_size[1]
                                 theme_text_color: "Hint"
-                                on_touch_down: None
                             MDLabel:
-                                text: AboutUsPage.SnowFlake["Customer Care Email"]
+                                markup: True
+                                text: AboutUsPage.SnowFlake["Website"]
                                 font_style: 'Body1'
                                 size_hint_y: None
                                 height: self.texture_size[1]
                                 theme_text_color: "Primary"
-                                on_touch_down: AboutUsPage.open_browser(self)
+                                on_ref_press: AboutUsPage.RefHandler(self)
 
                     MDCard:
                         orientation: "vertical"
@@ -221,4 +223,5 @@ ScreenManager:
                             color: app.blue
 
                         MDLabel:
+                            markup: True
                             text: 'I can Dance, I can Dance, I can Dance,'
