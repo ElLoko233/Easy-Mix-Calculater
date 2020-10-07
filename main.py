@@ -7,7 +7,6 @@ from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 
-import webbrowser as wb
 import pyperclip as clipboard
 import re
 
@@ -31,17 +30,23 @@ class AboutUsPage(ScrollView):
                                  'youtube': '[ref=YouTube]Snowflake Life[/ref]'}
                  }
 
+    # Developer info
+    App_Dev = {'profile': "Lelethu Futshane",
+               'gmail': "[ref=CopyPaste]ellokoprograma@gmail.com[/ref]",
+               'github': "[ref=GitHub]Elloko233[/ref]"}
+
     def __init__(self, **kwargs):
         super(AboutUsPage, self).__init__(**kwargs)
         # Dictionary of the linked to the corresponding functions
         self.ref_pattern = {'(\[ref=WebSite\])(?P<WebSite>.*)(\[/ref\])': self.open_site,
-                            '(\[ref=CopyPaste\])(?P<Copy>.*)(\[/ref\])':self.copyPaste,
-                            '(\[ref=Facebook\])(?P<Facebook>.*)(\[/ref\])':self.open_facebook,
-                            '(\[ref=Instagram\])(?P<Instagram>.*)(\[/ref\])':self.open_instagram,
-                            '(\[ref=YouTube\])(?P<YouTube>.*)(\[/ref\])':self.open_youtube}
+                            '(\[ref=CopyPaste\])(?P<Copy>.*)(\[/ref\])': self.copyPaste,
+                            '(\[ref=Facebook\])(?P<Facebook>.*)(\[/ref\])': self.open_facebook,
+                            '(\[ref=Instagram\])(?P<Instagram>.*)(\[/ref\])': self.open_instagram,
+                            '(\[ref=YouTube\])(?P<YouTube>.*)(\[/ref\])': self.open_youtube,
+                            '(\[ref=GitHub\])(?P<GitHub>.*)(\[/ref\])': self.open_git}
 
     # Handles ref attributes from labels
-    def RefHandler(self, instance: MDLabel, *args, **kwrags):
+    def RefHandler(self, instance: MDLabel, *args, **kwargs):
         # Handles the ref tagged labels
         for pattern in self.ref_pattern:
             # Finding the match from txt
@@ -59,8 +64,6 @@ class AboutUsPage(ScrollView):
         clipboard.copy(f'https://{url}')
         # Display toast on screen, inform url is saved to clipboard
         toast("url saved in clipboard")
-        # Opens browser to provided url
-        wb.open_new_tab(f'https://{url}')
 
     def copyPaste(self, text):
         # Save link to clipboard
@@ -73,25 +76,24 @@ class AboutUsPage(ScrollView):
         clipboard.copy(f'https://www.facebook.com/{page}/')
         # Display toast on screen, inform url is saved to clipboard
         toast("url saved in clipboard")
-        # Opens browser to provided url
-        wb.open_new_tab(f'https://www.facebook.com/{page}/')
 
+    def open_git(self, page):
+        # Save link to clipboard
+        clipboard.copy(f'https://github.com/{page}')
+        # Display toast on screen, inform url is saved to clipboard
+        toast("url saved in clipboard")
 
     def open_instagram(self, page):
         # Save link to clipboard
         clipboard.copy(f'https://www.instagram.com/{page}/')
         # Display toast on screen, inform url is saved to clipboard
         toast("url saved in clipboard")
-        # Opens browser to provided url
-        wb.open_new_tab(f'https://www.instagram.com/{page}/')
 
     def open_youtube(self, page):
         # Save link to clipboard
-        clipboard.copy(f'https: // www.youtube.com / c / {page}/ featured')
+        clipboard.copy(f'https://www.youtube.com/c/{page}/featured')
         # Display toast on screen, inform url is saved to clipboard
         toast("url saved in clipboard")
-        # Opens browser to provided url
-        wb.open_new_tab(f'https: // www.youtube.com / c / {page} / featured')
 
 
 class EasyMixCalculatorApp(MDApp):

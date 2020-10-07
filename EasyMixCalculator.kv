@@ -166,6 +166,7 @@ ScreenManager:
                                 size_hint_y: None
                                 height: self.texture_size[1]
                                 theme_text_color: "Primary"
+                                on_ref_press: AboutUsPage.RefHandler(self)
 
                         MDBoxLayout:
                             orientation: 'vertical'
@@ -204,16 +205,103 @@ ScreenManager:
                                 theme_text_color: "Primary"
                                 on_ref_press: AboutUsPage.RefHandler(self)
 
+                        MDBoxLayout:
+                            orientation: 'vertical'
+                            adaptive_height: True
+
+                            MDLabel:
+                                text: "Customer Care"
+                                font_style: 'Caption'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Hint"
+                            MDLabel:
+                                markup: True
+                                text: AboutUsPage.SnowFlake["Customer Care"]
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+                                on_ref_press: AboutUsPage.RefHandler(self)
+
+                        MDGridLayout:
+                            orientation: 'vertical'
+                            cols: 2
+                            rows: 1
+                            spacing: '10dp'
+                            adaptive_height: True
+
+                            MDIcon:
+                                icon: "facebook"
+                                size_hint: [None, None]
+                                width: self.texture_size[0]
+                                height: self.texture_size[1]
+                                theme_text_color: "Hint"
+                            MDLabel:
+                                markup: True
+                                text: AboutUsPage.SnowFlake["SocialMedia"]["facebook"]
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+                                on_ref_press: AboutUsPage.RefHandler(self)
+
+                        MDGridLayout:
+                            orientation: 'vertical'
+                            cols: 2
+                            rows: 1
+                            spacing: '10dp'
+                            adaptive_height: True
+
+                            MDIcon:
+                                icon: "youtube"
+                                size_hint: [None, None]
+                                width: self.texture_size[0]
+                                height: self.texture_size[1]
+                                theme_text_color: "Hint"
+                            MDLabel:
+                                markup: True
+                                text: AboutUsPage.SnowFlake["SocialMedia"]["youtube"]
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+                                on_ref_press: AboutUsPage.RefHandler(self)
+
+                        MDGridLayout:
+                            orientation: 'vertical'
+                            cols: 2
+                            rows: 1
+                            spacing: '10dp'
+                            adaptive_height: True
+
+                            MDIcon:
+                                icon: "instagram"
+                                size_hint: [None, None]
+                                width: self.texture_size[0]
+                                height: self.texture_size[1]
+                                theme_text_color: "Hint"
+                            MDLabel:
+                                markup: True
+                                text: AboutUsPage.SnowFlake["SocialMedia"]["instagram"]
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+                                on_ref_press: AboutUsPage.RefHandler(self)
+
                     MDCard:
                         orientation: "vertical"
                         size_hint: [0.9, None]
+                        height: self.minimum_height
                         pos_hint: {"center_x": .5, "center_y": .5}
                         padding: "8dp"
+                        spacing: '10dp'
                         elevation: '1dp'
 
                         MDLabel:
                             font_style: 'H5'
-                            text: 'Developer'
+                            text: 'App Developer'
                             theme_text_color: "Secondary"
                             size_hint_y: None
                             height: self.texture_size[1]
@@ -222,6 +310,67 @@ ScreenManager:
                             height: "2dp"
                             color: app.blue
 
-                        MDLabel:
-                            markup: True
-                            text: 'I can Dance, I can Dance, I can Dance,'
+                        MDGridLayout:
+                            orientation: 'vertical'
+                            cols: 2
+                            rows: 1
+                            spacing: '10dp'
+                            adaptive_height: True
+
+                            MDIcon:
+                                icon: "account"
+                                size_hint: [None, None]
+                                width: self.texture_size[0]
+                                height: self.texture_size[1]
+                                theme_text_color: "Hint"
+                            MDLabel:
+                                markup: True
+                                text: AboutUsPage.App_Dev["profile"]
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+
+                        MDGridLayout:
+                            orientation: 'vertical'
+                            cols: 2
+                            rows: 1
+                            spacing: '10dp'
+                            adaptive_height: True
+
+                            MDIcon:
+                                icon: "gmail"
+                                size_hint: [None, None]
+                                width: self.texture_size[0]
+                                height: self.texture_size[1]
+                                theme_text_color: "Hint"
+                            MDLabel:
+                                markup: True
+                                text: AboutUsPage.App_Dev["gmail"]
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+                                on_ref_press: AboutUsPage.RefHandler(self)
+
+                        MDGridLayout:
+                            orientation: 'vertical'
+                            cols: 2
+                            rows: 1
+                            spacing: '10dp'
+                            adaptive_height: True
+
+                            MDIcon:
+                                icon: "github"
+                                size_hint: [None, None]
+                                width: self.texture_size[0]
+                                height: self.texture_size[1]
+                                theme_text_color: "Hint"
+                            MDLabel:
+                                markup: True
+                                text: AboutUsPage.App_Dev["github"]
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+                                on_ref_press: AboutUsPage.RefHandler(self)
