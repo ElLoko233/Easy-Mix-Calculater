@@ -39,8 +39,143 @@ ScreenManager:
                 specific_text_color: app.blue
                 elevation: 10
 
-            BoxLayout:
-                orientation: 'vertical'
+            HelpPage:
+                do_scroll_x: False
+                do_scroll_y: True
+                id: HelpPage
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    adaptive_height: True
+                    padding: '20dp'
+                    spacing: '20dp'
+
+                    MDCard:
+                        orientation: "vertical"
+                        size_hint: [0.9, None]
+                        height: self.minimum_height
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        padding: "5dp"
+                        elevation: '0.5dp'
+
+                        MDBoxLayout:
+                            id: image_box
+                            adaptive_height: True
+
+                            Image:
+                                source: './folder.png'
+                                size_hint: .3, None
+                                height: image_box.height
+
+                        MDBoxLayout:
+                            id: text_box
+                            orientation: 'vertical'
+                            adaptive_height: True
+                            spacing: '2dp'
+
+                            MDLabel:
+                                font_style: 'H5'
+                                text: 'Title'
+                                theme_text_color: "Secondary"
+                                size_hint_y: None
+                                height: self.texture_size[1]
+
+                            MDSeparator:
+                                height: "2dp"
+                                color: app.blue
+
+                            MDLabel:
+                                text: 'Text'
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+
+                    MDCard:
+                        orientation: "vertical"
+                        size_hint: [0.9, None]
+                        height: self.minimum_height
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        padding: "5dp"
+                        elevation: '0.5dp'
+
+                        MDBoxLayout:
+                            id: image_box
+                            adaptive_height: True
+
+                            Image:
+                                source: './folder.png'
+                                size_hint: .3, None
+                                height: image_box.height
+
+                        MDBoxLayout:
+                            id: text_box
+                            orientation: 'vertical'
+                            adaptive_height: True
+                            spacing: '2dp'
+
+                            MDLabel:
+                                font_style: 'H5'
+                                text: 'Title'
+                                theme_text_color: "Secondary"
+                                size_hint_y: None
+                                height: self.texture_size[1]
+
+                            MDSeparator:
+                                height: "2dp"
+                                color: app.blue
+
+                            MDLabel:
+                                text: 'Text'
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+
+                    MDCard:
+                        orientation: "vertical"
+                        size_hint: [0.9, None]
+                        height: self.minimum_height
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        padding: "5dp"
+                        elevation: '0.5dp'
+
+                        MDBoxLayout:
+                            id: image_box
+                            adaptive_height: True
+
+                            Image:
+                                source: './folder.png'
+                                size_hint: .3, None
+                                height: image_box.height
+
+                        MDBoxLayout:
+                            id: text_box
+                            orientation: 'vertical'
+                            adaptive_height: True
+                            spacing: '2dp'
+
+                            MDLabel:
+                                font_style: 'H5'
+                                text: 'Title'
+                                theme_text_color: "Secondary"
+                                size_hint_y: None
+                                height: self.texture_size[1]
+
+                            MDSeparator:
+                                height: "2dp"
+                                color: app.blue
+
+                            MDLabel:
+                                text: 'Text'
+                                font_style: 'Body1'
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                theme_text_color: "Primary"
+
+
+
+
 
     MDScreen:
         name: 'AboutPage'
@@ -73,7 +208,7 @@ ScreenManager:
                         pos_hint: {"center_x": .5, "center_y": .5}
                         padding: "8dp"
                         spacing: '10dp'
-                        elevation: '1dp'
+                        elevation: '0.5dp'
 
 
                         MDLabel:
@@ -135,7 +270,7 @@ ScreenManager:
                         pos_hint: {"center_x": .5, "center_y": .5}
                         padding: "8dp"
                         spacing: '10dp'
-                        elevation: '1dp'
+                        elevation: '0.5dp'
 
 
                         MDLabel:
@@ -297,7 +432,7 @@ ScreenManager:
                         pos_hint: {"center_x": .5, "center_y": .5}
                         padding: "8dp"
                         spacing: '10dp'
-                        elevation: '1dp'
+                        elevation: '0.5dp'
 
                         MDLabel:
                             font_style: 'H5'

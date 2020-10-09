@@ -13,6 +13,26 @@ import re
 Window.size = [300, 520]
 
 
+class EasyMixCalculatorApp(MDApp):
+
+    def __init__(self, **kwargs):
+        super(EasyMixCalculatorApp, self).__init__(**kwargs)
+        self.grey = [226 / 255, 226 / 255, 226 / 255, 1]
+        self.yellow = [255 / 255, 218 / 255, 6 / 255, 1]
+        self.blue = [0 / 255, 35 / 255, 234 / 255, 1]
+        self.red = [226 / 255, 19 / 255, 19 / 255, 1]
+        self._loaded_kv_file = Builder.load_file('EasyMixCalculator.kv')
+
+    def build(self):
+        # self.theme_cls.theme_style = 'Dark'
+        return self._loaded_kv_file
+
+    @staticmethod
+    def change_screen(manager: ScreenManager, page, direction='left'):
+        manager.transition.direction = direction
+        manager.current = page
+
+
 class AboutUsPage(ScrollView):
     # EasyMixCalculator MDCard info
     EM_text = [
@@ -96,24 +116,8 @@ class AboutUsPage(ScrollView):
         toast("url saved in clipboard")
 
 
-class EasyMixCalculatorApp(MDApp):
-
-    def __init__(self, **kwargs):
-        super(EasyMixCalculatorApp, self).__init__(**kwargs)
-        self.grey = [226 / 255, 226 / 255, 226 / 255, 1]
-        self.yellow = [255 / 255, 218 / 255, 6 / 255, 1]
-        self.blue = [0 / 255, 35 / 255, 234 / 255, 1]
-        self.red = [226 / 255, 19 / 255, 19 / 255, 1]
-        self._loaded_kv_file = Builder.load_file('EasyMixCalculator.kv')
-
-    def build(self):
-        # self.theme_cls.theme_style = 'Dark'
-        return self._loaded_kv_file
-
-    @staticmethod
-    def change_screen(manager: ScreenManager, page, direction='left'):
-        manager.transition.direction = direction
-        manager.current = page
+class HelpPage(ScrollView):
+    pass
 
 
 if __name__ == "__main__":
