@@ -3,29 +3,44 @@ from kivymd.uix.label import MDLabel
 from kivymd.toast import toast
 
 from kivy.lang.builder import Builder
-from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
+from kivy.clock import Clock
+
 
 import pyperclip as clipboard
+from productscreen.ProductScreen import ProductScreener
 import re
 
 Window.size = [300, 520]
 
 
 class EasyMixCalculatorApp(MDApp):
-
     def __init__(self, **kwargs):
         super(EasyMixCalculatorApp, self).__init__(**kwargs)
         self.grey = [226 / 255, 226 / 255, 226 / 255, 1]
         self.yellow = [255 / 255, 218 / 255, 6 / 255, 1]
         self.blue = [0 / 255, 35 / 255, 234 / 255, 1]
         self.red = [226 / 255, 19 / 255, 19 / 255, 1]
-        self._loaded_kv_file = Builder.load_file('EasyMixCalculator.kv')
+        self.product = {"Muffins": {"eggs": 5, 'milk':10, 'water':10}, "Scones": {"eggs": 5, 'milk':10, 'water':10}}
+
+    def on_start(self):
+
+        for product in self.product:
+            Product = ProductScreener(title=product, original_ingredients=self.product[product])
+            Product.DisplayOrg()
+            self.root.ids.tabs.add_widget(Product)
 
     def build(self):
-        # self.theme_cls.theme_style = 'Dark'
-        return self._loaded_kv_file
+        self.theme_cls.primary_palette = "Yellow"
+        self.theme_cls.primary_hue = "A700"
+
+        self.theme_cls.accent_palette = "Blue"
+
+        self.theme_cls.theme_style = 'Dark'
+
+        return Builder.load_file('EasyMixCalculator.kv')
 
     @staticmethod
     def change_screen(manager: ScreenManager, page, direction='left'):
