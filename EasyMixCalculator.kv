@@ -540,8 +540,9 @@ ScreenManager:
                         height: self.texture_size[1]
 
                 MDGridLayout:
-                    id: orgDisplay
+                    id: orgGrid
                     cols: 2
+                    rows: len(root.base_ingrdients)
                     adaptive_height: True
                     padding: '10dp'
                     spacing: '25dp'
@@ -556,11 +557,9 @@ ScreenManager:
                         text: '#Ingredients'
                         text_color: app.yellow
                         md_bg_color: app.blue
-                        on_release: root.ing_collector(app.root)
 
                 AnchorLayout:
                     MDFlatButton:
                         text: '#Products'
                         text_color: app.yellow
                         md_bg_color: app.blue
-                        on_release: root.ing_collector(app.root)

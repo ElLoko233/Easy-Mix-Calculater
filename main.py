@@ -6,31 +6,31 @@ from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
-from kivy.clock import Clock
-
 
 import pyperclip as clipboard
-from productscreen.ProductScreen import ProductScreener
 import re
 
 Window.size = [300, 520]
 
 
 class EasyMixCalculatorApp(MDApp):
+
     def __init__(self, **kwargs):
         super(EasyMixCalculatorApp, self).__init__(**kwargs)
         self.grey = [226 / 255, 226 / 255, 226 / 255, 1]
         self.yellow = [255 / 255, 218 / 255, 6 / 255, 1]
         self.blue = [0 / 255, 35 / 255, 234 / 255, 1]
         self.red = [226 / 255, 19 / 255, 19 / 255, 1]
-        self.product = {"Muffins": {"eggs": 5, 'milk':10, 'water':10}, "Scones": {"eggs": 5, 'milk':10, 'water':10}}
+        self.product = {"Muffins": {"eggs": 5, 'milk': 10, 'water': 10}, "Scones": {"eggs": 5, 'milk': 10, 'water': 10}}
 
     def on_start(self):
-
-        for product in self.product:
-            Product = ProductScreener(title=product, original_ingredients=self.product[product])
-            Product.DisplayOrg()
-            self.root.ids.tabs.add_widget(Product)
+        pass
+        # Populating the MDTabs
+        #for product in self.product:
+            # Creating a tab containing the appropriate info
+            #Product = ProductScreener(title=product, original_ingredients=self.product[product])
+            #Product.DisplayOrg()
+            #self.root.ids.tabs.add_widget(Product)
 
     def build(self):
         self.theme_cls.primary_palette = "Yellow"
@@ -44,6 +44,7 @@ class EasyMixCalculatorApp(MDApp):
 
     @staticmethod
     def change_screen(manager: ScreenManager, page, direction='left'):
+        # This function controls the changing of screens and the direction they change to
         manager.transition.direction = direction
         manager.current = page
 
@@ -62,13 +63,11 @@ class AboutUsPage(ScrollView):
 
                  'SocialMedia': {'facebook': '[ref=Facebook]snowflakesouthafrica[/ref]',
                                  'instagram': '[ref=Instagram]snowflake_sa[/ref]',
-                                 'youtube': '[ref=YouTube]Snowflake Life[/ref]'}
-                 }
-
+                                 'youtube': '[ref=YouTube]Snowflake Life[/ref]'}}
     # Developer info
     App_Dev = {'profile': "Lelethu Futshane",
                'gmail': "[ref=CopyPaste]ellokoprograma@gmail.com[/ref]",
-               'github': "[ref=GitHub]Elloko233[/ref]"}
+               'github': "[ref=GitHub]ElLoko233[/ref]"}
 
     def __init__(self, **kwargs):
         super(AboutUsPage, self).__init__(**kwargs)
@@ -80,11 +79,11 @@ class AboutUsPage(ScrollView):
                             '(\[ref=YouTube\])(?P<YouTube>.*)(\[/ref\])': self.open_youtube,
                             '(\[ref=GitHub\])(?P<GitHub>.*)(\[/ref\])': self.open_git}
 
-    # Handles ref attributes from labels
+    # Handles ref attribute from labels
     def RefHandler(self, instance: MDLabel, *args, **kwargs):
-        # Handles the ref tagged labels
+
         for pattern in self.ref_pattern:
-            # Finding the match from txt
+            # locating the ref tagged labels
             match = re.match(pattern, instance.text)
 
             # Assigning match to their respective function
