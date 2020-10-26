@@ -3,15 +3,20 @@ from kivymd.uix.label import MDLabel
 from kivymd.toast import toast
 
 from kivy.lang.builder import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 
+from json import load
+from Product_Resources.productscreener import ProductScreen
 import pyperclip as clipboard
 import re
 
 Window.size = [300, 520]
 
+# Loading Base Ingredients from json file
+with open("Product_Resources/Product_Base_Ingredients.json", 'r') as JFile:
+    base_ingredients = load(JFile)
 
 class EasyMixCalculatorApp(MDApp):
 
@@ -21,16 +26,15 @@ class EasyMixCalculatorApp(MDApp):
         self.yellow = [255 / 255, 218 / 255, 6 / 255, 1]
         self.blue = [0 / 255, 35 / 255, 234 / 255, 1]
         self.red = [226 / 255, 19 / 255, 19 / 255, 1]
-        self.product = {"Muffins": {"eggs": 5, 'milk': 10, 'water': 10}, "Scones": {"eggs": 5, 'milk': 10, 'water': 10}}
 
     def on_start(self):
         pass
         # Populating the MDTabs
-        #for product in self.product:
+        for ingredient in base_ingredients:
             # Creating a tab containing the appropriate info
-            #Product = ProductScreener(title=product, original_ingredients=self.product[product])
-            #Product.DisplayOrg()
-            #self.root.ids.tabs.add_widget(Product)
+            Product = ProductScreen(title=ingredient, original_ingredients=base_ingredients[ingredient])
+            Product.DisplayOrg()
+            self.root.ids.tabs.add_widget(Product)
 
     def build(self):
         self.theme_cls.primary_palette = "Yellow"
