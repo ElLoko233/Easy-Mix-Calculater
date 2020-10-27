@@ -505,7 +505,19 @@ ScreenManager:
                                 theme_text_color: "Primary"
                                 on_ref_press: AboutUsPage.RefHandler(self)
 
-<ProductScreener>:
+<IngredientCollectorScreen>:
+
+    ScrollView:
+        do_scroll_y: True
+        do_scroll_x: False
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            adaptive_height: True
+            padding: '20dp'
+            spacing: '20dp'
+
+<ProductScreen>:
 
     ScrollView:
         do_scroll_y: True
@@ -525,6 +537,7 @@ ScreenManager:
                 pos_hint: {"center_x": .5, "center_y": .5}
                 spacing: '10dp'
                 elevation: '0.5dp'
+                md_bg_color: app.grey
 
                 MDBoxLayout:
                     adaptive_height: True
@@ -541,11 +554,11 @@ ScreenManager:
 
                 MDGridLayout:
                     id: orgGrid
+                    on_adaptive_height: root.DisplayOrg()
                     cols: 2
-                    rows: len(root.base_ingrdients)
                     adaptive_height: True
-                    padding: '10dp'
-                    spacing: '25dp'
+                    padding: '25dp'
+                    spacing: '35dp'
 
             MDGridLayout:
                 cols: 2
@@ -557,9 +570,11 @@ ScreenManager:
                         text: '#Ingredients'
                         text_color: app.yellow
                         md_bg_color: app.blue
+                        on_release: root.ingredient_collector_Screen(app.root)
 
                 AnchorLayout:
                     MDFlatButton:
                         text: '#Products'
                         text_color: app.yellow
                         md_bg_color: app.blue
+                        on_release: root.product_collector_Screen(app.root)

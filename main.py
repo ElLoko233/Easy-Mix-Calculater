@@ -7,16 +7,15 @@ from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 
-from json import load
 from Product_Resources.productscreener import ProductScreen
 import pyperclip as clipboard
 import re
+# Loading base ingredients
+from Product_Resources.product_base_ingredients import Base_Ingredients
+
 
 Window.size = [300, 520]
 
-# Loading Base Ingredients from json file
-with open("Product_Resources/Product_Base_Ingredients.json", 'r') as JFile:
-    base_ingredients = load(JFile)
 
 class EasyMixCalculatorApp(MDApp):
 
@@ -30,11 +29,11 @@ class EasyMixCalculatorApp(MDApp):
     def on_start(self):
         pass
         # Populating the MDTabs
-        for ingredient in base_ingredients:
+        for ingredient in Base_Ingredients:
             # Creating a tab containing the appropriate info
-            Product = ProductScreen(title=ingredient, original_ingredients=base_ingredients[ingredient])
-            Product.DisplayOrg()
-            self.root.ids.tabs.add_widget(Product)
+            product = ProductScreen(title=ingredient, base_ingredients=Base_Ingredients[ingredient])
+            product.DisplayOrg()
+            self.root.ids.tabs.add_widget(product)
 
     def build(self):
         self.theme_cls.primary_palette = "Yellow"
@@ -42,7 +41,7 @@ class EasyMixCalculatorApp(MDApp):
 
         self.theme_cls.accent_palette = "Blue"
 
-        self.theme_cls.theme_style = 'Dark'
+        # self.theme_cls.theme_style = 'Dark'
 
         return Builder.load_file('EasyMixCalculator.kv')
 
