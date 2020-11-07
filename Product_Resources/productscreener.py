@@ -3,27 +3,25 @@ The class managing the the product display
 """
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.floatlayout import FloatLayout
+from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
-from kivymd.uix.screen import Screen
+from kivymd.uix.menu import MDDropdownMenu
 
-from kivy.properties import StringProperty, DictProperty
+from kivy.properties import StringProperty, DictProperty, NumericProperty, ObjectProperty
 
 
 class ProductScreen(MDTabsBase, FloatLayout):
     title = StringProperty()
     base_ingredients = DictProperty()
 
-    def __init__(self, title, base_ingredients, **kwargs):
+    def __init__(self, title, base_ingredients, app, **kwargs):
         super(ProductScreen, self).__init__(**kwargs)
         self.title = title
         self.text = title
         self.base_ingredients = base_ingredients
+        self.app = app
 
-    def DisplayOrg(self):
-        """
-        Handles displaying the base ingredients to the screen
-        """
-        # Looping through the values
+        # Looping through base_ingredients and displaying them on screen
         for ingredient in self.base_ingredients:
             # Adding the label for the ingredient name
             label = MDLabel(text=ingredient, size_hint_y=None, font_style='Subtitle1')
@@ -39,16 +37,35 @@ class ProductScreen(MDTabsBase, FloatLayout):
 
             self.ids['orgGrid'].add_widget(label)
 
-    def ingredient_collector_Screen(self, srn_mgr, **kwargs):
-        print(srn_mgr.ids)
+    def ingredient_collector_Screen(self, **kwargs):
+        # Customizing the ICS
+        self.app.root.ids.ICS.product_update(product=self.title, base_ingredients=self.base_ingredients, app=self.app)
 
-    def product_collector_Screen(self, srn_mgr, **kwargs):
-        print(srn_mgr.ids)
+        # Change Screen
+        self.app.change_screen("ICS")
+
+    def product_collector_Screen(self, **kwargs):
+        pass
 
 
-class IngredientCollectorScreen(Screen):
-    pass
+class IngredientCollectorWidget(MDBoxLayout):
+    product = StringProperty()
+    value = NumericProperty()
+    unit = StringProperty()
 
+    def __init__(self, app, ingredients_object, ingredient_name='', **kwargs):
+        super(IngredientCollectorWidget, self).__init__(**kwargs)
 
-class ProductCollectorScreen(Screen):
-    pass
+        self.product = ingredient_name
+        self.ingredient_type = ingredients_object
+
+        # units of the ingredient
+        self.menu_items = list(ingredients_object.size.keys())
+
+        # Creating MDMenu instance
+        self.unit_menu = MDDropdownMenu(caller=self.ids['input_unit'], width_mult=3, background_color=app.yellow)
+
+        # User selected values
+        self.value = int() # Text Input text
+        self.unit = self.menu_items[0]
+
