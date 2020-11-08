@@ -179,7 +179,7 @@ class IngredientCollectorScreen(MDScreen):
         # looping through base_ingredients and adding the IngredientCollectorWidget
         for ingredient_name in list(base_ingredients.keys())[:-1]:
 
-            self.ingDisplay.add_widget(IngredientCollectorWidget( app=app, ingredient_name=ingredient_name,
+            self.ingDisplay.add_widget(IngredientCollectorWidget(app=app, ingredient_name=ingredient_name,
                                                                  ingredients_object=type(
                                                                      base_ingredients[ingredient_name])))
 
@@ -330,16 +330,6 @@ class IngredientCollectorWidget(MDGridLayout):
 
     def __init__(self, app, ingredients_object, ingredient_name='', **kwargs):
         super(IngredientCollectorWidget, self).__init__(**kwargs)
-
-        # Creating menu items
-        self.menu_items = [{"flask": size} for size in list(ingredients_object.size.keys())]
-
-        # Creating MDMenu instance
-        self.unit_menu = MDDropdownMenu(selected_color=app.blue, caller=self.ids.input_unit, width_mult=3,
-                                        background_color=app.yellow, items=self.menu_items, radius=0.5)
-
-        # Binging the menu to the set_unit function
-        self.unit_menu.bind(on_release=self.set_unit)
 
         self.product = ingredient_name
         self.ingredient_type = ingredients_object
@@ -1113,7 +1103,7 @@ ScreenManager:
             id: input_unit
             pos_hint: {'center_y': .62}
             text: root.unit
-            on_release: root.unit_menu.open()
+            on_release: print('hello')
 
 
 <ProductScreen>:
