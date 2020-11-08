@@ -25,9 +25,13 @@ ingredients_logger.addHandler(ingredients_log_file)
 class Ingredients:
     """
     This class is used to create ingredient object
-    These objects contain essential data for perfroming calculation on ingredients
-    ::Format: (value, unit)
+    These objects contain essential data for performing calculation on ingredients
+    ::argument: (value, unit)
     """
+    # Units of conversion/ SI units
+    _volume_unit = {'ml': 10 ** -3, 'l': 10 ** 0, 'kl': 10 ** 3}
+    _mass_unit = {'g': 10 ** 0, 'kg': 10 ** 3}
+    _egg_size = {'S-egg': 42, 'M-egg': 49, 'L-egg': 53, 'XL-egg': 63, 'J-egg': 70}
 
     def __init__(self, value: float, unit: str):
         self.value = float(value)
@@ -36,11 +40,6 @@ class Ingredients:
         # Testing if value is positive
         if self.value < 0:
             raise ValueError(f"{self.value}, ingredients can only be positive floats or int")
-
-        # Units of conversion/ SI units
-        self._volume_unit = {'ml': 10 ** -3, 'l': 10 ** 0, 'kl': 10 ** 3}
-        self._mass_unit = {'g': 10 ** 0, 'kg': 10 ** 3}
-        self._egg_size = {'S-egg': 42, 'M-egg': 49, 'L-egg': 53, 'XL-egg': 63, 'J-egg': 70}
 
     # Magic methods
     def __add__(self, other):
@@ -220,12 +219,12 @@ class Ingredients:
 
 class Wet(Ingredients):
     """
-    Manages the calculation partaining to ingredients that have volume
+    Manages the calculation pertaining to ingredients that have volume
     """
+    size = Ingredients._volume_unit
 
     def __init__(self, value, unit):
         super(Wet, self).__init__(value, unit)
-        self.size = self._volume_unit
 
         # Testing if unit is a volume measurement
         if not (self._volume_unit.get(self.unit)):
@@ -264,10 +263,10 @@ class Dry(Ingredients):
     """
     Manages calculation of ingredients that have mass
     """
+    size = Ingredients._mass_unit
 
     def __init__(self, value, unit):
         super(Dry, self).__init__(value, unit)
-        self.size = self._mass_unit
 
         # Testing if unit is a mass measurement/ egg size is also tested because Egg class values are also tested here
         if not (self._egg_size.get(self.unit)) and not (self._mass_unit.get(self.unit)):
@@ -306,10 +305,10 @@ class Egg(Dry):
     """
     Manages calculation of Egg like ingredients
     """
+    size = Ingredients._egg_size
 
     def __init__(self, value, unit):
         super(Egg, self).__init__(value, unit)
-        self.size = self._egg_size
 
         # Testing if unit is a egg size
         if not (self._egg_size.get(self.unit)) and not (self._mass_unit.get(self.unit)):
