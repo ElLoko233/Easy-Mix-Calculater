@@ -1,13 +1,12 @@
 """
 The class managing the the product display
 """
-from kivymd.uix.tab import MDTabsBase
-from kivymd.uix.floatlayout import FloatLayout
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.label import MDLabel
-from kivymd.uix.menu import MDDropdownMenu
+from kivy.properties import StringProperty, DictProperty
 
-from kivy.properties import StringProperty, DictProperty, NumericProperty, ObjectProperty
+from kivymd.uix.floatlayout import FloatLayout
+from kivymd.uix.label import MDLabel
+from kivymd.uix.tab import MDTabsBase
+
 
 
 class ProductScreen(MDTabsBase, FloatLayout):
@@ -45,27 +44,8 @@ class ProductScreen(MDTabsBase, FloatLayout):
         self.app.change_screen("ICS")
 
     def product_collector_Screen(self, **kwargs):
-        pass
+        # Customizing the PCS
+        self.app.root.ids.PCS.product_update(product=self.title, base_ingredients=self.base_ingredients, app=self.app)
 
-
-class IngredientCollectorWidget(MDBoxLayout):
-    product = StringProperty()
-    value = NumericProperty()
-    unit = StringProperty()
-
-    def __init__(self, app, ingredients_object, ingredient_name='', **kwargs):
-        super(IngredientCollectorWidget, self).__init__(**kwargs)
-
-        self.product = ingredient_name
-        self.ingredient_type = ingredients_object
-
-        # units of the ingredient
-        self.menu_items = list(ingredients_object.size.keys())
-
-        # Creating MDMenu instance
-        self.unit_menu = MDDropdownMenu(caller=self.ids['input_unit'], width_mult=3, background_color=app.yellow)
-
-        # User selected values
-        self.value = int() # Text Input text
-        self.unit = self.menu_items[0]
-
+        # Change Screen
+        self.app.change_screen("PCS")
