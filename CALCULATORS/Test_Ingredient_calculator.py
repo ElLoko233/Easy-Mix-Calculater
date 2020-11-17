@@ -103,35 +103,35 @@ class TestCalculatorsProduct(unittest.TestCase):
         # Testing results with expected values
         correct_results = [
             [
+                "0.0 Scones",
                 "1.0 XL-egg",
                 "0.0 ml",
-                "0.0 ml",
-                "0.0 Scones"
+                "0.0 ml"
             ],
             [
+                "133.0 Scones",
                 "20.0 J-egg",
                 "1.78 l",
-                "1111.11 ml",
-                "133.0 Scones"
+                "1111.11 ml"
             ],
             [
+                "2.0 Scones",
                 "1.0 XL-egg",
                 "32.0 ml",
-                "20.0 ml",
-                "2.0 Scones"
+                "20.0 ml"
             ],
             [
+                "30.0 Muffins",
                 "5.0 XL-egg",
                 "400.0 ml",
                 "250.0 ml",
                 "212.5 ml",
-                "0.31 kg",
-                "30.0 Muffins"
+                "0.31 kg"
             ],
             [
+                "50.0 Scones",
                 "10.0 L-egg",
-                "673.02 ml",
-                "50.0 Scones"
+                "673.02 ml"
             ]
         ]
 

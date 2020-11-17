@@ -1,5 +1,6 @@
 
 import logging
+from .Ingredients import Ingredients
 
 """
 Performing the maths that involves the ingredients and product
@@ -56,14 +57,20 @@ def calculate_product(org_ingredient: dict, new_ingredient: dict):
     # Note egg of original ingredients comes in as grams
     """
     :param org_ingredient: original ingredients, Dictionary of Ingredient objects
-    :param new_ingredient: new ingredients, Dictionary of Ingredient objects
+    :param new_ingredient: new ingredients, Dictionary of Ingredient objects excluding product
     :return: return an adjusted Dictioanary of Ingredient object,
     """
     calculator_logger.info(f"Parsed values--Org_ing:{[str(org_ingredient[ing]) for ing in org_ingredient]}"
                            f"<--->new_ing:{[str(new_ingredient[ing]) for ing in new_ingredient]}")
 
-    exclude_product = org_ingredient  # Excluding the 'Product' item// This line doesnt create a copy of the dict
-    Product = exclude_product.pop('Product')
+    exclude_product = org_ingredient.copy() # Excluding the 'Product' item// This line doesnt create a copy of the dict
+
+    for ing in exclude_product:
+        if type(exclude_product[ing]) == Ingredients:
+            product_name = ing
+            break
+
+    Product = exclude_product.pop(product_name)
 
     # Testing if keys on both ingredients are the similar
     if list(exclude_product.keys()) == list(new_ingredient.keys()):
@@ -79,7 +86,7 @@ def calculate_product(org_ingredient: dict, new_ingredient: dict):
         calculator_logger.info(f"ratio as calculated to be {ratio}")
 
         # Results of the ingredients
-        org_ingredient['Product'] = Product  # Returning product value
+        org_ingredient[product_name] = Product  # Returning product value
         converted_ingredients = {ing: org_ingredient[ing] * ratio for ing in org_ingredient}
 
         # converting ingredients to units of new_ingredients
@@ -93,7 +100,7 @@ def calculate_product(org_ingredient: dict, new_ingredient: dict):
                 converted_ingredients["Egg"].value = 1.0
 
             # Rounding eggs and products to the whole number
-            converted_ingredients['Product'] = round(converted_ingredients['Product'])  # Rounding off products
+            converted_ingredients[product_name] = round(converted_ingredients[product_name])  # Rounding off products
             converted_ingredients["Egg"] = round(converted_ingredients["Egg"])
             calculator_logger.info("Calculations completed!! \n\n")
             return converted_ingredients
@@ -101,7 +108,7 @@ def calculate_product(org_ingredient: dict, new_ingredient: dict):
     else:
         calculator_logger.error("Ingredients did not match \n\n")
         raise ValueError(
-            f"{[str(org_ingredient[ing]) for ing in org_ingredient]} and {[str(new_ingredient[ing]) for ing in new_ingredient]} these are not related ingredients")
+            f"{list(org_ingredient.keys())} and {list(new_ingredient.keys())} these are not related ingredients")
 
 
 # ============================================================================
@@ -116,11 +123,15 @@ def calculate_ingredients(org_ingredients: dict, new_product: int):
     """
     calculator_logger.info(f"Parsed values--org_ing:{[str(org_ingredients[ing]) for ing in org_ingredients]}"
                            f"<--->new_product:{new_product}")
+    # Acquiring name of product
+    for ing in org_ingredients:
+        Product = ing if type(org_ingredients[ing]) == Ingredients else 'Product'
+        break
 
     # Testing if product is positive value
     if float(new_product) or new_product > 0:
         # The ratio for determining the amounts
-        ratio = (new_product / org_ingredients['Product']).value
+        ratio = (new_product / org_ingredients[Product]).value
         calculator_logger.info(f"Calculated ratio  is:{ratio}")
 
         # Converting egg unit
