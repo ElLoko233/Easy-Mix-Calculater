@@ -104,7 +104,7 @@ class TestCalculatorsProduct(unittest.TestCase):
         correct_results = [
             [
                 "0.0 Scones",
-                "1.0 XL-egg",
+                "0.0 XL-egg",
                 "0.0 ml",
                 "0.0 ml"
             ],
@@ -116,7 +116,7 @@ class TestCalculatorsProduct(unittest.TestCase):
             ],
             [
                 "2.0 Scones",
-                "1.0 XL-egg",
+                "0.4 XL-egg",
                 "32.0 ml",
                 "20.0 ml"
             ],
@@ -249,7 +249,7 @@ class TestCalculateIngredients(unittest.TestCase):
             ],
             [
                 "1.0 Scones",
-                "1.0 XL-egg",
+                "0.17 XL-egg",
                 "13.33 ml"
             ]
         ]

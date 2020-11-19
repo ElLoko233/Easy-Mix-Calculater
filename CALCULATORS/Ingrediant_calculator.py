@@ -95,13 +95,8 @@ def calculate_product(org_ingredient: dict, new_ingredient: dict):
             converted_ingredients[ing] = round(converted_ingredients[ing].unit_convert(new_ingredient[ing].unit), 2)
 
         else:
-            # Testing if egg is less than one
-            if converted_ingredients["Egg"] < 1:
-                converted_ingredients["Egg"].value = 1.0
-
             # Rounding eggs and products to the whole number
             converted_ingredients[product_name] = round(converted_ingredients[product_name])  # Rounding off products
-            converted_ingredients["Egg"] = round(converted_ingredients["Egg"])
             calculator_logger.info("Calculations completed!! \n\n")
             return converted_ingredients
 
@@ -134,19 +129,11 @@ def calculate_ingredients(org_ingredients: dict, new_product: int):
         ratio = (new_product / org_ingredients[Product]).value
         calculator_logger.info(f"Calculated ratio  is:{ratio}")
 
-        # Converting egg unit
+        # Converting units
         converted_ingredients = {}
         for ing in org_ingredients:
-            # Testing of egg
-            if ing == "Egg":
-                converted_ingredients[ing] = round(org_ingredients[ing] * ratio)
+            converted_ingredients[ing] = round(org_ingredients[ing] * ratio, 2)
 
-                # If less than 1 default to 1
-                if converted_ingredients[ing].value < 1:
-                    converted_ingredients[ing].value = 1.0
-
-            else:
-                converted_ingredients[ing] = round(org_ingredients[ing] * ratio, 2)
         else:
             calculator_logger.info("Calculations complete!! \n\n")
             return converted_ingredients
