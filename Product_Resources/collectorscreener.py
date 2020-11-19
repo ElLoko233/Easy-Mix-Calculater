@@ -100,10 +100,13 @@ class IngredientCollectorScreen(MDScreen):
         """
 
         # Calling the product update method of the ResultsPage
-        self.app.root.ids.RP.product_update(app=self.app, product=self.product, ingredients=ingredients)
+        if self.app.root.ids.RP.product_update(app=self.app, product=self.product, ingredients=ingredients):
 
-        # Change screen
-        self.app.change_screen('RP')
+            # Change screen
+            self.app.change_screen('RP')
+
+        else:
+            pass
 
 
 class ProductCollectorScreen(MDScreen):
@@ -185,7 +188,10 @@ class ProductCollectorScreen(MDScreen):
         """
 
         # Calling the product update method of the ResultsPage
-        self.app.root.ids.RP.product_update(app=self.app, product=self.product, ingredients=ingredients)
+        if self.app.root.ids.RP.product_update(app=self.app, product=self.product, ingredients=ingredients):
 
-        # Change screen
-        self.app.change_screen('RP', direction='right')
+            # Change screen
+            self.app.change_screen('RP')
+
+        else:
+            pass

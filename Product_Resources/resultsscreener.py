@@ -41,5 +41,14 @@ class ResultsPage(MDScreen):
                 self.ingDisplay.add_widget(ResultWidgetProduct(app=self.app, ingredient_name=ingredient,
                                                                ingredient=self.ingredients[ingredient]))
             else:
-                self.ingDisplay.add_widget(ResultWidget(app=self.app, ingredient_name=ingredient,
-                                                        ingredient=self.ingredients[ingredient]))
+                # Testing if result is valid
+                result = ResultWidget(app=self.app, ingredient_name=ingredient, ingredient=self.ingredients[ingredient])
+
+                if result.is_valid():
+                    self.ingDisplay.add_widget(result)
+                    continue
+                else:
+                    result.dialog.open()
+                    return False
+        else:
+            return True
