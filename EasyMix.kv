@@ -1,8 +1,35 @@
-
+#:include force Product_Resources/ResultProduct.kv
+#:include force Product_Resources/ProductScreen.kv
+#:include force Product_Resources/Collector.kv
 
 ScreenManager:
     name: srn_mgr
     id: srn_mgr
+
+    MDScreen:
+        md_bg_color: app.blue
+        name: 'splash'
+
+        Image:
+            source: 'Snow Flake logo_168x118.png'
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {'center_x':.5, 'center_y':.7}
+
+
+        CustomLabel:
+            id: title
+            name: 'title'
+            markup: True
+            text: '[ref=text]EasyMix Calculator[/ref]'
+            halign: 'center'
+            size_hint_y: None
+            height: self.texture_size[1]
+            font_style: 'H6'
+            bold: True
+            theme_text_color: 'Custom'
+            text_color: [1, 1 , 1, 1]
+            pos_hint: {'center_y':.5}
 
     MDScreen:
         name: "HomePage"
@@ -11,9 +38,11 @@ ScreenManager:
             orientation: 'vertical'
 
             MDToolbar:
-                title: "EM Calculator"
-                right_action_items: [["help-circle-outline", lambda x: app.change_screen('HelpPage')], ["comment-question", lambda x: app.change_screen( "AboutPage")]]
-                specific_text_color: app.blue
+
+                id: home_toolbar
+                title: "EasyMix"
+                right_action_items: [['flashlight-off' if app.theme_cls.theme_style == 'Dark' else 'flashlight', app.change_style], ["help-circle-outline", lambda x: app.change_screen('HelpPage')], ["comment-question", lambda x: app.change_screen( "AboutPage")]]
+                specific_text_color: app.blue if self.theme_cls.theme_style == 'Light' else app.blue
                 elevation: 10
 
             MDTabs:
@@ -23,6 +52,7 @@ ScreenManager:
                 color_indicator: app.blue
                 tab_bar_height: '30dp'
                 tab_indicator_anim: True
+                on_tab_switch: app.current_tab(*args)
 
     ResultsPage:
         name: 'RP'
@@ -34,7 +64,7 @@ ScreenManager:
             MDToolbar:
                 title: RP.product
                 left_action_items: [["arrow-bottom-left", lambda x: app.change_screen( app.previous_screen, 'right')]]
-                specific_text_color: app.blue
+                specific_text_color: app.blue if self.theme_cls.theme_style == 'Light' else app.blue
                 elevation: 2
                 id: RP_toolbar
 
@@ -80,7 +110,7 @@ ScreenManager:
                         anchor_x: 'center'
 
                         MDRaisedButton:
-                            elevation: '5dp'
+                            elevation: '10dp'
                             text: 'Done'
                             text_color: app.yellow
                             md_bg_color: app.blue
@@ -97,7 +127,7 @@ ScreenManager:
                 title: ICS.product
                 left_action_items: [["home", lambda x: app.change_screen( 'HomePage', 'right')]]
                 right_action_items: [["help-circle-outline", lambda x: app.change_screen('HelpPage')]]
-                specific_text_color: app.blue
+                specific_text_color: app.blue if self.theme_cls.theme_style == 'Light' else app.blue
                 elevation: 2
                 id: ICS_toolbar
 
@@ -123,7 +153,7 @@ ScreenManager:
                         anchor_x: 'center'
 
                         MDRaisedButton:
-                            elevation: '5dp'
+                            elevation: '10dp'
                             markup: True
                             text: '[b][size=18]calculate[/size][/b]'
                             md_bg_color: app.blue
@@ -141,7 +171,7 @@ ScreenManager:
                 title: ICS.product
                 left_action_items: [["home", lambda x: app.change_screen( 'HomePage', 'right')]]
                 right_action_items: [["help-circle-outline", lambda x: app.change_screen('HelpPage')]]
-                specific_text_color: app.blue
+                specific_text_color: app.blue if self.theme_cls.theme_style == 'Light' else app.blue
                 elevation: 2
                 id: PCS_toolbar
 
@@ -167,7 +197,7 @@ ScreenManager:
                         anchor_x: 'center'
 
                         MDRaisedButton:
-                            elevation: '5dp'
+                            elevation: '10dp'
                             markup: True
                             text: '[b][size=18]calculate[/size][/b]'
                             md_bg_color: app.blue
@@ -182,7 +212,7 @@ ScreenManager:
             MDToolbar:
                 title: "Help"
                 left_action_items: [["arrow-bottom-left", lambda x: app.change_screen( app.previous_screen, 'right')]]
-                specific_text_color: app.blue
+                specific_text_color: app.blue if self.theme_cls.theme_style == 'Light' else app.blue
                 elevation: 10
 
             HelpPage:
@@ -194,132 +224,215 @@ ScreenManager:
                     orientation: 'vertical'
                     adaptive_height: True
                     padding: '20dp'
-                    spacing: '20dp'
+                    spacing: '30dp'
 
                     MDCard:
                         orientation: "vertical"
                         size_hint: [0.9, None]
                         height: self.minimum_height
                         pos_hint: {"center_x": .5, "center_y": .5}
-                        padding: "5dp"
+                        padding: "10dp"
+                        spacing: '20dp'
                         elevation: '0.5dp'
 
                         MDBoxLayout:
-                            id: image_box
                             adaptive_height: True
-
-                            Image:
-                                source: './folder.png'
-                                size_hint: .3, None
-                                height: image_box.height
-
-                        MDBoxLayout:
-                            id: text_box
                             orientation: 'vertical'
-                            adaptive_height: True
-                            spacing: '2dp'
+                            spacing: '5dp'
 
                             MDLabel:
-                                font_style: 'H5'
-                                text: 'Title'
-                                theme_text_color: "Secondary"
+                                markup: True
+                                text: '[size=20dp][color=#333333]Ingredient button[/color][/size]' if app.theme_cls.theme_style == 'Light' else '[size=20dp][color=#e6e6e6]Ingredient button[/color][/size]'
                                 size_hint_y: None
                                 height: self.texture_size[1]
+
 
                             MDSeparator:
                                 height: "2dp"
                                 color: app.blue
 
-                            MDLabel:
-                                text: 'Text'
-                                font_style: 'Body1'
-                                size_hint_y: None
-                                height: self.texture_size[1]
-                                theme_text_color: "Primary"
+                        MDBoxLayout:
+                            adaptive_height: True
+                            padding: '20dp'
+
+                            AnchorLayout:
+                                anchor_x: 'center'
+                                padding: '10dp'
+
+                                MDRaisedButton:
+                                    elevation: '10dp'
+                                    text: '#ingredients'
+                                    text_color: app.yellow
+                                    md_bg_color: app.blue
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.ingredient_btn_help_p1
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.ingredient_btn_help_p2
+                            size_hint_y: None
+                            bold: True
+                            height: self.texture_size[1]
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.ingredient_btn_help_p3
+                            size_hint_y: None
+                            height: self.texture_size[1]
 
                     MDCard:
                         orientation: "vertical"
                         size_hint: [0.9, None]
                         height: self.minimum_height
                         pos_hint: {"center_x": .5, "center_y": .5}
-                        padding: "5dp"
+                        padding: "10dp"
+                        spacing: '20dp'
                         elevation: '0.5dp'
 
                         MDBoxLayout:
-                            id: image_box
                             adaptive_height: True
-
-                            Image:
-                                source: './folder.png'
-                                size_hint: .3, None
-                                height: image_box.height
-
-                        MDBoxLayout:
-                            id: text_box
                             orientation: 'vertical'
-                            adaptive_height: True
-                            spacing: '2dp'
+                            spacing: '5dp'
 
                             MDLabel:
-                                font_style: 'H5'
-                                text: 'Title'
-                                theme_text_color: "Secondary"
+                                markup: True
+                                text: '[size=20dp][color=#333333]Product button[/color][/size]' if app.theme_cls.theme_style == 'Light' else '[size=20dp][color=#e6e6e6]Product button[/color][/size]'
                                 size_hint_y: None
                                 height: self.texture_size[1]
+
 
                             MDSeparator:
                                 height: "2dp"
                                 color: app.blue
 
-                            MDLabel:
-                                text: 'Text'
-                                font_style: 'Body1'
-                                size_hint_y: None
-                                height: self.texture_size[1]
-                                theme_text_color: "Primary"
+                        MDBoxLayout:
+                            adaptive_height: True
+                            padding: '20dp'
+
+                            AnchorLayout:
+                                anchor_x: 'center'
+                                padding: '10dp'
+
+                                MDRaisedButton:
+                                    elevation: '10dp'
+                                    text: '#products'
+                                    text_color: app.yellow
+                                    md_bg_color: app.blue
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.product_btn_help_p1
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.product_btn_help_p2
+                            size_hint_y: None
+                            bold: True
+                            height: self.texture_size[1]
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.product_btn_help_p3
+                            size_hint_y: None
+                            height: self.texture_size[1]
 
                     MDCard:
                         orientation: "vertical"
                         size_hint: [0.9, None]
                         height: self.minimum_height
                         pos_hint: {"center_x": .5, "center_y": .5}
-                        padding: "5dp"
+                        padding: "10dp"
+                        spacing: '20dp'
                         elevation: '0.5dp'
 
                         MDBoxLayout:
-                            id: image_box
                             adaptive_height: True
-
-                            Image:
-                                source: ''
-                                size_hint: .3, None
-                                height: image_box.height
-
-                        MDBoxLayout:
-                            id: text_box
                             orientation: 'vertical'
-                            adaptive_height: True
-                            spacing: '2dp'
+                            spacing: '5dp'
 
                             MDLabel:
-                                font_style: 'H5'
-                                text: 'Title'
-                                theme_text_color: "Secondary"
+                                markup: True
+                                text: '[size=20dp][color=#333333]Ingredient input value[/color][/size]' if app.theme_cls.theme_style == 'Light' else '[size=20dp][color=#e6e6e6]Ingredient input value[/color][/size]'
                                 size_hint_y: None
                                 height: self.texture_size[1]
+
 
                             MDSeparator:
                                 height: "2dp"
                                 color: app.blue
 
+                        MDTextField:
+                            hint_text: 'Input ingredient'
+                            focus: True
+                            text: '500'
+
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.input_help_p1
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        MDTextField:
+                            hint_text: 'Input ingredient'
+                            focus: True
+                            error: True
+                            helper_text_mode: 'on_error'
+                            helper_text: "input value that's > 0 and is < 9999"
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.input_help_error
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+
+                    MDCard:
+                        orientation: "vertical"
+                        size_hint: [0.9, None]
+                        height: self.minimum_height
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        padding: "10dp"
+                        spacing: '20dp'
+                        elevation: '0.5dp'
+
+                        MDBoxLayout:
+                            adaptive_height: True
+                            orientation: 'vertical'
+                            spacing: '5dp'
+
                             MDLabel:
-                                text: 'Text'
-                                font_style: 'Body1'
+                                markup: True
+                                text: '[size=20dp][color=#333333]Ingredient unit[/color][/size]' if app.theme_cls.theme_style == 'Light' else '[size=20dp][color=#e6e6e6]Ingredient unit[/color][/size]'
                                 size_hint_y: None
                                 height: self.texture_size[1]
-                                theme_text_color: "Primary"
 
 
+                            MDSeparator:
+                                height: "2dp"
+                                color: app.blue
+
+                        MDBoxLayout:
+                            adaptive_height: True
+                            padding: '10dp'
+
+                            AnchorLayout:
+                                anchor_x: 'center'
+
+                                MDDropDownItem:
+                                    text: 'ml'
+
+                        MDLabel:
+                            markup: True
+                            text: HelpPage.dropdown_help_p1
+                            size_hint_y: None
+                            height: self.texture_size[1]
 
 
 
@@ -332,7 +445,7 @@ ScreenManager:
             MDToolbar:
                 title: "About Us"
                 left_action_items: [["arrow-bottom-left", lambda x: app.change_screen( app.previous_screen, 'right')]]
-                specific_text_color: app.blue
+                specific_text_color: app.blue if self.theme_cls.theme_style == 'Light' else app.blue
                 elevation: 10
 
             AboutUsPage:
@@ -654,191 +767,3 @@ ScreenManager:
                                 height: self.texture_size[1]
                                 theme_text_color: "Primary"
                                 on_ref_press: AboutUsPage.RefHandler(self)
-<ProductCollectorWidget>:
-    id: product_input_widget
-    adaptive_height: True
-    row_default_height: '50dp'
-    cols_minimum: {0:10}
-    cols: 2
-
-    MDBoxLayout:
-        size_hint_x: 0.15
-
-        MDLabel:
-            id: label_text
-            text: root.product
-            halign: 'left'
-            valign: 'bottom'
-
-    BoxLayout:
-        size_hint_x: 0.4
-
-        MDTextField:
-            id: input_value
-            on_text_validate: (lambda : root.input_error(0) if root.is_valid() else root.input_error(1))()
-            input_filter: 'int'
-            hint_text: 'Input ingredients'
-            helper_text_mode: 'on_error'
-            helper_text: "input value that's > 0 and is < 9999"
-            required: True
-
-
-<IngredientCollectorWidget>:
-    id: product_input_widget
-    adaptive_height: True
-    row_default_height: '50dp'
-    cols_minimum: {0:10}
-    cols: 3
-
-    MDBoxLayout:
-        size_hint_x: 0.15
-
-        MDLabel:
-            id: label_text
-            text: root.product
-            halign: 'left'
-            valign: 'bottom'
-
-    BoxLayout:
-        size_hint_x: 0.4
-
-        MDTextField:
-            id: input_value
-            on_text_validate: (lambda : root.input_error(0) if root.is_valid() else root.input_error(1))()
-            input_filter: 'int'
-            hint_text: 'Input ingredients'
-            helper_text_mode: 'on_error'
-            helper_text: "input value that's > 0 and is < 9999"
-            required: True
-
-    BoxLayout:
-        size_hint_x: 0.2
-
-        MDDropDownItem:
-            id: input_unit
-            pos_hint: {'center_y': .62}
-            text: root.unit
-            on_release: root.unit_menu.open()
-
-
-<ProductScreen>:
-
-    ScrollView:
-        do_scroll_y: True
-        do_scroll_x: False
-
-        MDBoxLayout:
-            orientation: 'vertical'
-            adaptive_height: True
-            padding: '20dp'
-            spacing: '20dp'
-
-            MDCard:
-                id: orgCard
-                orientation: "vertical"
-                size_hint: [0.9, None]
-                height: self.minimum_height
-                pos_hint: {"center_x": .5, "center_y": .5}
-                spacing: '10dp'
-                elevation: '0.5dp'
-
-                MDBoxLayout:
-                    adaptive_height: True
-                    padding: '10dp'
-                    md_bg_color: app.theme_cls.primary_color
-
-                    MDLabel:
-                        font_style: 'H5'
-                        text: root.title
-                        theme_text_color: "Custom"
-                        text_color: app.blue
-                        size_hint_y: None
-                        height: self.texture_size[1]
-
-                MDGridLayout:
-                    id: orgGrid
-                    on_adaptive_height: root.DisplayOrg()
-                    cols: 2
-                    adaptive_height: True
-                    padding: '25dp'
-                    spacing: '35dp'
-
-            MDGridLayout:
-                cols: 2
-                rows: 1
-                adaptive_height: True
-
-                AnchorLayout:
-                    MDRaisedButton:
-                        elevation: '5dp'
-                        text: '#ingredients'
-                        text_color: app.yellow
-                        md_bg_color: app.blue
-                        on_release: root.ingredient_collector_Screen()
-
-                AnchorLayout:
-                    MDRaisedButton:
-                        elevation: '5dp'
-                        text: '#products'
-                        text_color: app.yellow
-                        md_bg_color: app.blue
-                        on_release: root.product_collector_Screen()
-
-<ResultWidget>:
-    id: result_widget
-    adaptive_height: True
-    row_default_height: '50dp'
-    cols_minimum: {0:10}
-    cols: 3
-
-    MDBoxLayout:
-        size_hint_x: 0.25
-
-        MDLabel:
-            id: label_text
-            text: root.ingredient_name
-            halign: 'left'
-            valign: 'bottom'
-
-    BoxLayout:
-        size_hint_x: 0.3
-
-        MDLabel:
-            text: root.ingredient_value
-            halign: 'left'
-            valign: 'bottom'
-
-
-    BoxLayout:
-        size_hint_x: 0.35
-
-        MDDropDownItem:
-            id: input_unit
-            pos_hint: {'center_y': .62}
-            text: root.unit
-            on_release: root.unit_menu.open()
-
-<ResultWidgetProduct>:
-    id: result_widget_product
-    adaptive_height: True
-    row_default_height: '50dp'
-    cols_minimum: {0:10}
-    cols: 2
-    spacing: '2dp'
-
-    MDBoxLayout:
-        size_hint_x: 0.62
-
-        MDLabel:
-            id: label_text
-            text: root.ingredient_name
-            halign: 'left'
-            valign: 'bottom'
-
-    BoxLayout:
-        size_hint_x: 0.38
-
-        MDLabel:
-            text: root.ingredient_value
-            halign: 'left'
-            valign: 'bottom'
