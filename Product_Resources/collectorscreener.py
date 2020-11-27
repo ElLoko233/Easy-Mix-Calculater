@@ -6,6 +6,8 @@ from kivy.properties import StringProperty, DictProperty
 
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.spinner import MDSpinner
+from kivymd.app import MDApp
 
 from .collectorwidget import IngredientCollectorWidget, ProductCollectorWidget
 from CALCULATORS.Ingrediant_calculator import calculate_ingredients, calculate_product
@@ -16,7 +18,8 @@ class IngredientCollectorScreen(MDScreen):
     product = StringProperty()
     base_ingredients = DictProperty()
 
-    def product_update(self, app, product='', base_ingredients={}):
+
+    def product_update(self, app: MDApp, product='', base_ingredients={}):
         """
         This function will update the screen and add certain widgets to the screen
         :param product: The name of the product
@@ -24,6 +27,11 @@ class IngredientCollectorScreen(MDScreen):
         :param app: the app object
         :return: 1
         """
+        # Creating and instance of a spinner widget
+        self.spinner = MDSpinner(size_hint=(0.3, 0.3), pos_hint={'center_x':0.5, 'center_y':0.5}, palette=[app.yellow,
+                                                                                                       app.blue,
+                                                                                                       app.red])
+
         # Creating an app attribute
         self.app = app
 
@@ -56,6 +64,11 @@ class IngredientCollectorScreen(MDScreen):
         this function will collect the users input and load them into a dictionary
         :return: 1 if success
         """
+        # staring loading screen
+        self.add_widget(self.spinner)
+        self.disabled = True
+        self.spinner.active = True
+
         # Dictionary of the user inputted values
         userIngredients = {}
 
@@ -86,11 +99,18 @@ class IngredientCollectorScreen(MDScreen):
 
             userIngredients = {item: userIngredients[item] for item in values}
 
+
             # Conducting calculation to get the results for provided ingredients
             results = calculate_product(org_ingredient=self.base_ingredients, new_ingredient=userIngredients)
 
             # Opening the the results
             self.open_results(results)
+
+        # ending loading screen
+        self.spinner.active = False
+        self.disabled = False
+        self.remove_widget(self.spinner)
+
 
     def open_results(self, ingredients):
         """
@@ -113,7 +133,7 @@ class ProductCollectorScreen(MDScreen):
     product = StringProperty()
     base_ingredients = DictProperty()
 
-    def product_update(self, app, product='', base_ingredients={}):
+    def product_update(self, app: MDApp, product='', base_ingredients={}):
         """
         This function will update the screen and add certain widgets to the screen
         :param product: The name of the product
@@ -121,6 +141,10 @@ class ProductCollectorScreen(MDScreen):
         :param app: the app object
         :return: 1
         """
+        # Creating and instance of a spinner widget
+        self.spinner = MDSpinner(size_hint=(0.3, 0.3), pos_hint={'center_x': 0.5, 'center_y': 0.5}, palette=[app.yellow,
+                                                                                                         app.blue,
+                                                                                                         app.red])
         # Creating an app attribute
         self.app = app
 
@@ -148,6 +172,11 @@ class ProductCollectorScreen(MDScreen):
         this function will collect the users input and load them into a dictionary
         :return: 1 if success
         """
+        # staring loading screen
+        self.add_widget(self.spinner)
+        self.disabled = True
+        self.spinner.active = True
+
         # Dictionary of the user inputted values
         userIngredients = {}
 
@@ -180,6 +209,12 @@ class ProductCollectorScreen(MDScreen):
             # Opening the the results
             self.open_results(results)
 
+        # ending loading screen
+        self.spinner.active = False
+        self.disabled = False
+        self.remove_widget(self.spinner)
+
+
     def open_results(self, ingredients):
         """
         method will open the result page and load the proper info
@@ -189,9 +224,10 @@ class ProductCollectorScreen(MDScreen):
 
         # Calling the product update method of the ResultsPage
         if self.app.root.ids.RP.product_update(app=self.app, product=self.product, ingredients=ingredients):
-
+            # >> end
             # Change screen
             self.app.change_screen('RP')
 
         else:
+            # >> end
             pass

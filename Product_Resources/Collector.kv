@@ -1,0 +1,65 @@
+<ProductCollectorWidget>:
+    id: product_input_widget
+    adaptive_height: True
+    row_default_height: '50dp'
+    cols_minimum: {0:10}
+    cols: 2
+
+    MDBoxLayout:
+        size_hint_x: 0.15
+
+        MDLabel:
+            id: label_text
+            text: root.product
+            halign: 'left'
+            valign: 'bottom'
+
+    BoxLayout:
+        size_hint_x: 0.4
+
+        MDTextField:
+            id: input_value
+            on_text_validate: (lambda : root.input_error(0) if root.is_valid() else root.input_error(1))()
+            input_filter: 'int'
+            hint_text: 'Input number of product'
+            helper_text_mode: 'on_error'
+            helper_text: "input value that's > 0 and is < 9999"
+            required: True
+
+
+<IngredientCollectorWidget>:
+    id: product_input_widget
+    adaptive_height: True
+    row_default_height: '50dp'
+    cols_minimum: {0:10}
+    cols: 3
+
+    MDBoxLayout:
+        size_hint_x: 0.15
+
+        MDLabel:
+            id: label_text
+            text: root.product
+            halign: 'left'
+            valign: 'bottom'
+
+    BoxLayout:
+        size_hint_x: 0.4
+
+        MDTextField:
+            id: input_value
+            on_text_validate: (lambda : root.input_error(0) if root.is_valid() else root.input_error(1))()
+            input_filter: 'int'
+            hint_text: 'Input ingredient'
+            helper_text_mode: 'on_error'
+            helper_text: "input value that's > 0 and is < 9999"
+            required: True
+
+    BoxLayout:
+        size_hint_x: 0.2
+
+        MDDropDownItem:
+            id: input_unit
+            pos_hint: {'center_y': .62}
+            text: root.unit
+            on_release: root.unit_menu.open()

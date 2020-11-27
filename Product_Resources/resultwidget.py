@@ -26,6 +26,7 @@ class ResultWidget(MDGridLayout):
         self.dialog = MDDialog(title='Result too small!',
                                text=f'An ingredient is too small to continue. Please input a larger value or larger size for your ingredients.',
                                buttons=[dialog_btn])
+
         dialog_btn.bind(on_release=lambda x: self.dialog.dismiss())
 
         # Setting the attributes

@@ -1,0 +1,60 @@
+
+
+<ResultWidget>:
+    id: result_widget
+    adaptive_height: True
+    row_default_height: '50dp'
+    cols_minimum: {0:10}
+    cols: 3
+
+    MDBoxLayout:
+        size_hint_x: 0.25
+
+        MDLabel:
+            id: label_text
+            text: root.ingredient_name
+            halign: 'left'
+            valign: 'bottom'
+
+    BoxLayout:
+        size_hint_x: 0.3
+
+        MDLabel:
+            text: root.ingredient_value
+            halign: 'left'
+            valign: 'bottom'
+
+
+    BoxLayout:
+        size_hint_x: 0.35
+
+        MDDropDownItem:
+            id: input_unit
+            pos_hint: {'center_y': .62}
+            text: root.unit
+            on_release: root.unit_menu.open()
+
+<ResultWidgetProduct>:
+    id: result_widget_product
+    adaptive_height: True
+    row_default_height: '50dp'
+    cols_minimum: {0:10}
+    cols: 2
+    spacing: '2dp'
+
+    MDBoxLayout:
+        size_hint_x: 0.62
+
+        MDLabel:
+            id: label_text
+            text: root.ingredient_name
+            halign: 'left'
+            valign: 'bottom'
+
+    BoxLayout:
+        size_hint_x: 0.38
+
+        MDLabel:
+            text: root.ingredient_value
+            halign: 'left'
+            valign: 'bottom'
