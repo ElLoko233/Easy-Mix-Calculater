@@ -92,4 +92,25 @@ class AboutUsPage(ScrollView):
 
 
 class HelpPage(ScrollView):
-    pass
+    ingredient_btn_help_p1 = "This button will take you to a page where you will input the ingredients you currently  " \
+                             "have."
+
+    ingredient_btn_help_p2 = "If an ingredient is too small you will be asked to increase its size or unit."
+
+    ingredient_btn_help_p3 = "On completion it will show you the exact amounts of each ingredient that you can use to " \
+                             "make a certain amount of the product "
+
+    product_btn_help_p1 = "This button will take you to a page where you will input the amount of product you want to " \
+                          "make"
+
+    product_btn_help_p2 = "If the amount of product you provide is too small you will be asked to increase it."
+
+    product_btn_help_p3 = "On completion it will show you the exact amounts of each ingredient that you can use to " \
+                             "make the provided amount of the product "
+
+    input_help_p1 = "This is where you will provide the measurement/amount of ingredient you have"
+
+    input_help_error = "Cannot be smaller than or equal to zero.\n\ncannot be larger than 9999"
+
+    dropdown_help_p1 = "This is where you can change the unit of the ingredient."
+
