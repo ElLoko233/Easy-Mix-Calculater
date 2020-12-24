@@ -51,8 +51,7 @@ class ProductScreen(MDTabsBase, FloatLayout):
             self.ids['orgGrid'].add_widget(ingRow)
 
             # Adding seperator
-            self.ids['orgGrid'].add_widget(
-                MDSeparator(height='10dp', color=app.blue if app.theme_cls.theme_style == 'Light' else app.blue))
+            #self.ids['orgGrid'].add_widget(MDSeparator(height='10dp', color=app.blue if app.theme_cls.theme_style == 'Light' else app.blue))
 
     def orgCard_in(self):
         """

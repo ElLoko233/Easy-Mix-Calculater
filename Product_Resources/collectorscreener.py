@@ -88,6 +88,11 @@ class IngredientCollectorScreen(MDScreen):
 
                 # Running the error method
                 userInput.input_error(error=1)
+
+                # ending loading screen
+                self.spinner.active = False
+                self.disabled = False
+                self.remove_widget(self.spinner)
                 break
         else:
             # Converting egg value to grams from base_ingredients
@@ -106,10 +111,10 @@ class IngredientCollectorScreen(MDScreen):
             # Opening the the results
             self.open_results(results)
 
-        # ending loading screen
-        self.spinner.active = False
-        self.disabled = False
-        self.remove_widget(self.spinner)
+            # ending loading screen
+            self.spinner.active = False
+            self.disabled = False
+            self.remove_widget(self.spinner)
 
 
     def open_results(self, ingredients):
@@ -196,6 +201,11 @@ class ProductCollectorScreen(MDScreen):
 
                 # Running the error method
                 userInput.input_error(error=1)
+
+                # ending loading screen
+                self.spinner.active = False
+                self.disabled = False
+                self.remove_widget(self.spinner)
                 break
         else:
 
@@ -209,10 +219,10 @@ class ProductCollectorScreen(MDScreen):
             # Opening the the results
             self.open_results(results)
 
-        # ending loading screen
-        self.spinner.active = False
-        self.disabled = False
-        self.remove_widget(self.spinner)
+            # ending loading screen
+            self.spinner.active = False
+            self.disabled = False
+            self.remove_widget(self.spinner)
 
 
     def open_results(self, ingredients):

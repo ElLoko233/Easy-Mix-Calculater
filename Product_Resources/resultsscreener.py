@@ -1,5 +1,6 @@
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.dialog import MDSeparator
 
 from kivy.properties import DictProperty, ObjectProperty
 
@@ -40,6 +41,7 @@ class ResultsPage(MDScreen):
             if type(self.ingredients[ingredient]) == Ingredients:
                 self.ingDisplay.add_widget(ResultWidgetProduct(app=self.app, ingredient_name=ingredient,
                                                                ingredient=self.ingredients[ingredient]))
+
             else:
                 # Testing if result is valid
                 result = ResultWidget(app=self.app, ingredient_name=ingredient, ingredient=self.ingredients[ingredient])
@@ -50,5 +52,6 @@ class ResultsPage(MDScreen):
                 else:
                     result.dialog.open()
                     return False
+
         else:
             return True
