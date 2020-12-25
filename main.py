@@ -1,6 +1,7 @@
 from kivy.core.window import Window
 from kivy.lang.builder import Builder
 from kivy.clock import Clock
+from kivy.utils import platform
 
 from kivymd.app import MDApp
 from kivymd.uix.behaviors import MagicBehavior
@@ -13,14 +14,13 @@ from Product_Resources.collectorwidget import IngredientCollectorWidget, Product
 from Product_Resources.resultsscreener import ResultsPage
 from Product_Resources.resultwidget import ResultWidget, ResultWidgetProduct
 from appdetails.app_details import HelpPage, AboutUsPage
-
-Window.size = [300, 520]
-
+from os import path
 
 class EasyMixCalculatorApp(MDApp):
 
     def __init__(self, **kwargs):
         super(EasyMixCalculatorApp, self).__init__(**kwargs)
+
         self.grey = [226 / 255, 226 / 255, 226 / 255, 1]
         self.yellow = [255 / 255, 237 / 255, 47 / 255, 1]
         self.blue = [23 / 255, 70 / 255, 162 / 255, 1]
@@ -28,11 +28,28 @@ class EasyMixCalculatorApp(MDApp):
         # Screen size
         self.screen_size = Window.size
 
+        # android device storage location
+        if platform == 'android':
+            from android.storage import app_storage_path
+            self.settings_path = app_storage_path()
+        else:
+            self.setting_path = 'settings/'
+
         # The instance of the previous tab
         self.previous_tab = ''
 
         # creating the previous screen attribute
         self.previous_screen = ''
+
+    def key_input(self, window, key, scancode, codepoint, modifier):
+        if key == 27:
+            try:
+                self.change_screen(page=self.previous_screen)
+                return True
+            except:
+                return False
+        else:  # the key now does nothing
+            return False
 
     def on_start(self):
 
@@ -50,9 +67,7 @@ class EasyMixCalculatorApp(MDApp):
             self.root.ids.home_toolbar.ids.label_title.font_size = '25sp'
 
             # Removing splash screen
-            Clock.schedule_once(lambda x: self.change_screen('HomePage', direction='left'), 3)
-
-
+            Clock.schedule_once(lambda x: self.change_screen('HomePage', direction='left'), 3.5)
 
             return True
 
@@ -69,17 +84,19 @@ class EasyMixCalculatorApp(MDApp):
         tabbase.orgCard_in()
 
     def build(self):
+        Window.bind(on_keyboard=self.key_input)
+
         self.theme_cls.primary_palette = "Yellow"
         self.theme_cls.primary_hue = "A700"
         self.theme_cls.accent_palette = "Blue"
 
         # Loading saved style
         try:
-            with open('settings.jk', 'r') as file:
+            with open(path.join(self.setting_path, 'settings.jk'), 'r') as file:
                 self.theme_cls.theme_style = file.read()
 
-        except FileNotFoundError:
-            pass
+        except (FileNotFoundError, ValueError):
+            self.theme_cls.theme_style = 'Light'
 
         return Builder.load_file('EasyMix.kv')
 
@@ -98,8 +115,9 @@ class EasyMixCalculatorApp(MDApp):
         self.root.current = page
 
     def save_settings(self):
+
         # Saving value of the app style
-        with open('settings.jk', 'w') as file:
+        with open(path.join(self.setting_path, 'settings.jk'), 'w') as file:
             file.write(self.theme_cls.theme_style)
 
     def change_style(self, instance):
@@ -119,6 +137,4 @@ class EasyMixCalculatorApp(MDApp):
 class CustomLabel(MagicBehavior, MDLabel):
     pass
 
-
-if __name__ == '__main__':
-    EasyMixCalculatorApp().run()
+EasyMixCalculatorApp().run()

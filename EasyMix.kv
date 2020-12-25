@@ -100,9 +100,9 @@ ScreenManager:
                                 theme_text_color: "Custom"
                                 text_color: app.blue
 
-                        MDBoxLayout:
+                        MDGridLayout:
                             adaptive_height: True
-                            orientation: 'vertical'
+                            cols: 1
                             id: RP_ingDisplay
                             padding: '10dp'
 
@@ -145,7 +145,7 @@ ScreenManager:
                         id: ICS_ingDisplay
                         orientation: 'vertical'
                         adaptive_height: True
-                        spacing: '15dp'
+                        spacing: '10dp'
                         padding: '10dp'
                         pos_hint: {'center_y': 0.5, 'center_x': 0.5}
 
